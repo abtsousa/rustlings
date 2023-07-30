@@ -18,8 +18,6 @@
 // - The output element is going to be a Vector of strings.
 // No hints this time!
 
-// I AM NOT DONE
-
 pub enum Command {
     Uppercase,
     Trim,
@@ -27,14 +25,29 @@ pub enum Command {
 }
 
 mod my_module {
+    use std::ascii::AsciiExt;
+
     use super::Command;
 
     // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
         // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
+        let mut output: Vec<String> = vec![];
         for (string, command) in input.iter() {
             // TODO: Complete the function body. You can do it!
+            let out = match command {
+                Command::Uppercase => string.to_uppercase(),
+                Command::Trim => string.trim().into(),
+                Command::Append(a) => string.to_owned()+&"bar".repeat(*a)
+                /*Command::Append(a) => {
+                    let mut new_string = string.clone();
+                    for _ in 0..*a {
+                        new_string = new_string+"bar";
+                    }
+                    new_string
+                }*/
+            };
+            output.push(out);
         }
         output
     }
@@ -43,7 +56,7 @@ mod my_module {
 #[cfg(test)]
 mod tests {
     // TODO: What do we need to import to have `transformer` in scope?
-    use ???;
+    use crate::my_module::transformer;
     use super::Command;
 
     #[test]
